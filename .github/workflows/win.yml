@@ -1,0 +1,23 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: info
+      run: du -msc .??* *
+    - name: apt
+      run: sudo apt-get update && sudo apt-get install automake ca-certificates g++ git libtool libleptonica-dev make pkg-config libpango1.0-dev
+    - name: autogen
+      run: ./autogen.sh
+    - name: configure
+      run: ./configure
